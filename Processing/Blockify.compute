@@ -1,0 +1,63 @@
+﻿#pragma kernel Blockify
+
+RWTexture2D<float4> Result;
+Texture2D<float4> ImageInput;
+uint width;
+uint height;
+uint numTilesX;
+uint numTilesY;
+uint drawTileBorders;
+uint frame;
+RWStructuredBuffer<int> tileMatrix;
+RWStructuredBuffer<int> blocksizeMap;
+RWStructuredBuffer<float> thresholdMap;
+[numthreads(8,8,1)]
+void Blockify (uint3 id : SV_DispatchThreadID)
+{
+	uint tileX = 0;
+	uint tileY = 0;
+	uint tileSizeX = width/numTilesX;
+	uint tileSizeY = height/numTilesY;
+	
+    tileX = id.x/tileSizeX; //Can probably cause som problems
+    tileY = id.y/tileSizeY; //^
+	uint qual = tileMatrix[tileX+tileY*numTilesX];
+    uint blocksize = blocksizeMap[qual];
+    uint threshold = thresholdMap[qual];
+	uint offsetX = id.x%blocksize;
+	uint offsetY = id.y%blocksize;
+	
+    if(drawTileBorders==1 && (id.x>tileSizeX*(1+tileX)-2 || id.y>tileSizeY*(1+tileY)-2)) {
+        Result[id.xy]=float4(1,0,0,1);
+        return;
+    }
+    else if(qual==0) {
+        Result[id.xy]=float4(1,0,1,1);
+        return;
+    }
+
+	float2 blockOrigin = float2(min(width,max(0,id.x-offsetX)),min(height,max(0,id.y-offsetY)));
+	blockOrigin = id.xy - float2(offsetX,offsetY);
+    
+    
+    float4 sum = float4(0,0,0,0);
+    uint div = 0;
+    for(uint i=0;i<blocksize;i++){
+        for(uint j=0;j<blocksize;j++){
+            //if(blockOrigin.x+j >=width || blockOrigin.y+i >= height)continue;
+            //else{
+            float2 tmp = blockOrigin+float2(j,i);
+            sum+=ImageInput[tmp];
+            div++;
+            //}
+        }
+    }
+    float4 a = Result[id.xy];
+    float4 b = sum/div;//ImageInput[id.xy];
+    float diff = abs(a.x-b.x) + abs(a.y-b.y) + abs(a.z-b.z) + abs(a.w-b.w);
+    if(diff>threshold||frame==0) 
+        Result[id.xy]= b;//ImageInput[id.xy];
+    
+    //Result[id.xy] = ImageInput[blockOrigin];
+    
+}
