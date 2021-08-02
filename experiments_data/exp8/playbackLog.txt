@@ -1,0 +1,2 @@
+stall-start stall-duration
+31,02753 0,3999996

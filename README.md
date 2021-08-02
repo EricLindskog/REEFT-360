@@ -1,10 +1,9 @@
-# 360 video emulator
+# Introduction
 
-This repo contains the vital files of the 360 video emulator.
+A repository containing the source code of the tool presented in the paper *"REEFT-360: Real-time Emulation and Evaluation Framework for Tile-based 360 Streaming under Time-varying Conditions"*.  
+It is under the GNU GPL 3.0 license and the result data from the experiments can be seen in the *experiments_data* folder. The tool utilises compute shaders in order to emulate different quality levels and tiling of the video and as such a fairly powerful GPU is recommended, especially when using videos with higher framerates.
 
-It utilises compute shaders in order to emulate quality levels and tiling.
-
-It is recommended that you have some experience with c# or java as some editing of the code will be required.
+It is recommended that you have some experience with c# or java before using (or modifying) the tool, as some editing of the code will be required.
 
 # How to set up (in order):
 
@@ -28,3 +27,7 @@ It is recommended that you have some experience with c# or java as some editing 
 
 - run the scene in unity.
 
+# Finally
+
+We kindly ask that should you mention our framework or use our code, in your publication, that you would reference the following paper:  
+Eric Lindskog and Niklas Carlsson, *“REEFT-360: Real-time Emulation and Evaluation Framework for Tile-based 360 Streaming under Time-varying Conditions”*, Proc. ACM Multimedia Systems Conference (ACM MMSys), Istanbul, Turkey, Sept/Oct. 2021.
