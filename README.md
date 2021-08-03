@@ -25,9 +25,9 @@ It is recommended that you have some experience with c# or java before using (or
 
 - Make sure to copy all output files between recordings as they will be overwritten when running in eval mode. 
 
-- run the scene in unity.
+- Run the scene in unity.
 
 # Finally
 
-We kindly ask that should you mention our framework or use our code, in your publication, that you would reference the following paper:  
+Should you mention or use our framework, code, or datasets in your work, we kindly ask that you reference the following paper in your publication:  
 Eric Lindskog and Niklas Carlsson, *“REEFT-360: Real-time Emulation and Evaluation Framework for Tile-based 360 Streaming under Time-varying Conditions”*, Proc. ACM Multimedia Systems Conference (ACM MMSys), Istanbul, Turkey, Sept/Oct. 2021.
